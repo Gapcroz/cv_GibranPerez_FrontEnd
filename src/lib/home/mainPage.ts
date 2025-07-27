@@ -1,6 +1,5 @@
 import { getUmbracoContent } from "@/lib/server/umbracoApi";
-import { personalInfo } from "@/types/mainPage";
-import { UmbracoContent } from "@/types/umbraco";
+import { RawPersonalInfo, personalInfo, workInfo } from "@/types/mainPage";
 import { stripHtml } from "@/utils/umbracoText";
 
 export async function getHomePageData(): Promise<personalInfo> {
@@ -8,33 +7,39 @@ export async function getHomePageData(): Promise<personalInfo> {
   if (!content || !content.properties) {
     throw new Error("Failed to fetch landing page data");
   }
-  const { properties } = content as UmbracoContent;
+
+  const raw = content.properties as unknown as RawPersonalInfo;
+
+  const transformedItems: workInfo[] = raw.workCard.items.map((item) => {
+    const data = item.content?.properties;
+
+    return {
+      jobName: data.jobName,
+      companyName: data.companyName,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      urlLinks: data.urlLinks ?? [],
+      activitiesList: data.activitiesList ?? [],
+      jobSummary: {
+        markup: data.jobSummary?.markup
+          ? stripHtml(data.jobSummary.markup)
+          : "contenido no disponible",
+      },
+    };
+  });
+
   return {
-    nameDev: properties.nameDev,
-    jobTitle: properties.jobTitle,
-    locationDev: properties.locationDev,
-    phone: properties.phone,
-    emailDev: properties.emailDev,
+    nameDev: raw.nameDev,
+    jobTitle: raw.jobTitle,
+    locationDev: raw.locationDev,
+    phone: raw.phone,
+    emailDev: raw.emailDev,
     workCard: {
-      items: properties.workCard.items.map(
-        (item: { content: { properties: any } }) => ({
-          jobName: item.content.properties.jobName,
-          companyName: item.content.properties.companyName,
-          startDate: new Date(item.content.properties.startDate),
-          endDate: item.content.properties.endDate,
-          jobSummary: {
-            markup: item.content.properties.jobSummary?.markup
-              ? stripHtml(item.content.properties.jobSummary?.markup)
-              : "contenido no disponible",
-          },
-          urlLinks: item.content.properties.urlLinks || [],
-          activitiesList: item.content.properties.activitiesList || [],
-        })
-      ),
+      items: transformedItems,
     },
     summaryDev: {
-      markup: properties.summaryDev?.markup
-        ? stripHtml(properties.summaryDev?.markup)
+      markup: raw.summaryDev?.markup
+        ? stripHtml(raw.summaryDev.markup)
         : "contenido no disponible",
     },
   };

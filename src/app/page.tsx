@@ -35,17 +35,22 @@ const MainPage = async () => {
           <div key={index}>
             <h2>{item.jobName}</h2>
             <h2>{item.companyName}</h2>
-            <h2>{item.startDate.toString()}</h2>
+            <h2>
+              {item.startDate
+                ? new Date(item.startDate).toLocaleDateString()
+                : "Sin fecha"}
+            </h2>
+
             <div
               dangerouslySetInnerHTML={{ __html: item.jobSummary?.markup }}
             />
             <ul>
-              {item.urlLinks.map((link, index) => (
+              {(item.urlLinks ?? []).map((link, index) => (
                 <li key={index}>- {link}</li>
               ))}
             </ul>
             <ul>
-              {item.activitiesList.map((activity, index) => (
+              {(item.activitiesList ?? []).map((activity, index) => (
                 <li key={index}>- {activity}</li>
               ))}
             </ul>

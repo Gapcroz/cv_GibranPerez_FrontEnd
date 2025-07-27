@@ -1,7 +1,17 @@
+// src/app/layout.tsx
+import {
+  poppins,
+  roboto,
+  sairaCondensed,
+  bebasNeue,
+  pixelifySans,
+} from "@/utils/fonts";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Header from "@/app/header/header";
+import Footer from "@/app/footer/footer";
 import { getHeaderData } from "@/lib/header/headerData";
+import { getFooterData } from "@/lib/footer/footerData";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,14 +35,25 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const headerData = await getHeaderData();
+  const footerData = await getFooterData();
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`
+          ${geistSans.variable}
+          ${geistMono.variable}
+          ${poppins.variable}
+          ${roboto.variable}
+          ${sairaCondensed.variable}
+          ${bebasNeue.variable}
+          ${pixelifySans.variable}
+          antialiased
+        `}
       >
         {/* spread operator to pass all properties */}
         {headerData && <Header {...headerData} />}
         <main className="pt-20">{children}</main>
+        {footerData && <Footer {...footerData} />}
       </body>
     </html>
   );

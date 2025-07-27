@@ -1,6 +1,4 @@
 export function stripHtml(markup: string): string {
-  // Allow only <b>, <i>, <strong>, <em> tags
-  const allowedTags = ["b", "i", "strong", "em"];
   const tagRegex = /<(?!(?:\/)?(?:b|i|strong|em)\b)[^>]+>/gi;
   let strippedMarkup = markup.replace(tagRegex, "");
 

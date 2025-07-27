@@ -1,3 +1,23 @@
+// Crudo desde Umbraco
+export interface RawWorkItem {
+  content: {
+    properties: workInfo;
+  };
+}
+
+export interface RawPersonalInfo {
+  nameDev: string;
+  jobTitle: string;
+  locationDev: string;
+  phone: string;
+  emailDev: string;
+  workCard: {
+    items: RawWorkItem[];
+  };
+  summaryDev: MarkupText;
+}
+
+// Procesado
 export interface personalInfo {
   nameDev: string;
   jobTitle: string;
@@ -21,5 +41,5 @@ export interface workInfo {
 }
 
 export interface MarkupText {
-  markup: string | TrustedHTML;
+  markup: string;
 }

@@ -6,8 +6,8 @@ export interface UmbracoContent {
   updateDate: string;
   route: UmbracoRoute;
   id: string;
-  properties: Record<string, any>;
-  cultures: Record<string, any>;
+  properties: Record<string, unknown>;
+  cultures: Record<string, unknown>;
 }
 
 export interface UmbracoRoute {

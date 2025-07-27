@@ -1,6 +1,6 @@
 // src/lib/header/headerData.ts
 import { getUmbracoContent } from "../server/umbracoApi";
-import { HeaderProps } from "@/types/header/header";
+import { HeaderProps, imageProps } from "@/types/header/header";
 
 export async function getHeaderData(): Promise<HeaderProps | null> {
   try {
@@ -15,18 +15,18 @@ export async function getHeaderData(): Promise<HeaderProps | null> {
       heroPrincipalTitle,
       heroSlogan,
       heroGifBackground,
-    } = content.properties;
+    } = content.properties as unknown as HeaderProps;
     const UmbracoApiUrl = process.env.UMBRACO_API_URL;
     return {
       headerTitle: headerTitle,
-      headerLogo: headerLogo.map((item: any) => ({
+      headerLogo: headerLogo.map((item: imageProps) => ({
         name: item.name,
         url: `${UmbracoApiUrl}${item.url}`,
       })),
       headerOptions: headerOptions.map((option: string) => option.trim()),
       heroPrincipalTitle: heroPrincipalTitle,
       heroSlogan: heroSlogan,
-      heroGifBackground: heroGifBackground.map((item: any) => ({
+      heroGifBackground: heroGifBackground.map((item: imageProps) => ({
         name: item.name,
         url: `${UmbracoApiUrl}${item.url}`,
       })),

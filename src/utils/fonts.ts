@@ -2,9 +2,9 @@
 import {
   Poppins,
   Roboto,
-  // SairaCondensed,
-  // BebasNeue,
-  // PixelifySans,
+  Saira_Condensed,
+  Bebas_Neue,
+  Pixelify_Sans,
 } from "next/font/google";
 
 export const poppins = Poppins({
@@ -21,20 +21,20 @@ export const roboto = Roboto({
   variable: "--font-roboto",
 });
 
-// export const sairaCondensed = Saira_Condensed({
-//   subsets: ["latin"],
-//   weight: ["400", "700"],
-//   variable: "--font-saira-condensed",
-// });
+export const sairaCondensed = Saira_Condensed({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-saira-condensed",
+});
 
-// export const bebasNeue = Bebas_Neue({
-//   subsets: ["latin"],
-//   weight: ["400"], // Bebas Neue solo tiene un peso
-//   variable: "--font-bebas-neue",
-// });
+export const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-bebas-neue",
+});
 
-// export const pixelifySans = Pixelify_Sans({
-//   subsets: ["latin"],
-//   weight: ["400", "700"],
-//   variable: "--font-pixelify-sans",
-// });
+export const pixelifySans = Pixelify_Sans({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-pixelify-sans",
+});
